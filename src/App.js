@@ -12,19 +12,28 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') == null || localStorage.getItem('token') == '' ? false : true) //para saber si está logeado o no
 
+  const [userId, setUserId] = useState(localStorage.getItem('id'));
 
   const login = (token, id) => {
 
     localStorage.setItem('token', token);
     localStorage.setItem('id', id);
-
+    setUserId(userId);
     setLoggedIn(true)
     window.location.href = '/home';
 
   }
 
+  const logout = () => {
+    const itemsToRemove = ['token', 'id'];
+    itemsToRemove.forEach(key => {
+      localStorage.removeItem(key);
+    });
+    window.location.href = '/home';
+  }
 
-  return <Context.Provider value={{ loggedIn, login }}>
+
+  return <Context.Provider value={{ loggedIn, login, userId, logout }}>
 
     {loggedIn ?
       <>
