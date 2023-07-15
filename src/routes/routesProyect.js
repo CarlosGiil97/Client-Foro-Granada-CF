@@ -1,5 +1,6 @@
 import { Home } from '../pages/home';
 import { Profile } from '../pages/profile';
+import { NewPost } from '../pages/newPost';
 
 export const routesProyect = [
     {
@@ -16,5 +17,10 @@ export const routesProyect = [
         path: '/profile',
         exact: true,
         component: Profile,
+    },
+    {
+        path: '/newPost',
+        exact: true,
+        component: NewPost,
     }
 ];
