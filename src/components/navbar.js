@@ -77,9 +77,9 @@ export function Navbar() {
                                         fill="currentColor"
                                         className="h-5 w-5">
                                         <path
-                                            fill-rule="evenodd"
+                                            fillRule="evenodd"
                                             d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
-                                            clip-rule="evenodd" />
+                                            clipRule="evenodd" />
                                     </svg>
                                 </span>
 
@@ -177,8 +177,8 @@ export function Navbar() {
             </nav>
             <img src="/background.jpeg" alt="Descripción de la imagen" className="w-full object-cover h-48 sm:h-64 md:h-96 lg:h-128" />
             <div className="flex justify-center bg-black">
-                <a href="#" className="px-4 py-2 text-white hover:text-gray-300">Inicio</a>
-                <a href="/new_post" className="px-4 py-2 text-white hover:text-gray-300">Crear nuevo tema</a>
+                <a href="/" className="px-4 py-2 text-white hover:text-gray-300">Inicio</a>
+                <a href="/newPost" className="px-4 py-2 text-white hover:text-gray-300">Crear nuevo tema</a>
                 <a href="#" className="px-4 py-2 text-white hover:text-gray-300">Mis mensajes</a>
                 <a href="#" className="px-4 py-2 text-white hover:text-gray-300">Mi perfil</a>
             </div>
