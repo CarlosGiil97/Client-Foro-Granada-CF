@@ -21,6 +21,7 @@ export function PostReplys() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [replyes, setReplyes] = useState([]);
+    const [numReplies, setNumReplies] = useState(0);
 
 
     let modules = {
@@ -48,6 +49,7 @@ export function PostReplys() {
 
     }
 
+
     //con useEffect hago una petición para obtener las categories
     useEffect(() => {
 
@@ -59,6 +61,7 @@ export function PostReplys() {
                 setDescription(res.data.body)
 
                 if (Object.keys(res.data.replyes).length > 0) {
+                    setNumReplies(res.data.numReplies)
                     setReplyes(res.data.replyes)
                 }
             })
@@ -88,7 +91,7 @@ export function PostReplys() {
                         </div>
 
                         {/* Formulario para informar sobre el post que se está*/}
-                        <form className="flex flex-col mb-8">
+                        <form className="flex flex-col mb-2">
                             {/* Input para el contenido de la respuesta */}
                             <h1 class="mb-4 text-1xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white">{title}</h1>
 
@@ -99,7 +102,12 @@ export function PostReplys() {
 
                             <div className="flex justify-end mb-4">
                                 {/* Agregar los iconos de corazón */}
-                                <a href="#test" class="m-2 bg-green-300 hover:bg-green-400 text-white-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                {numReplies > 0 ?
+                                    <a class="m-2 bg-slate-100 hover:bg-slate-300 text-white-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                        Mostrando {numReplies} respuestas
+                                    </a>
+                                    : ''}
+                                <a href="#addResponse" class="m-2 bg-green-300 hover:bg-green-400 text-white-800 font-bold py-2 px-4 rounded inline-flex items-center">
                                     <FaPen className="mr-2" />
                                     <span>Comentar</span>
                                 </a>
@@ -108,31 +116,53 @@ export function PostReplys() {
                                     <span>Me gusta</span>
                                 </a>
                             </div>
-                            <hr />
+
                         </form>
+                        <hr class="w-48 h-1 mx-auto my-4 bg-red-800 border-0 rounded md:my-10 dark:bg-gray-700" />
 
                         {/* Lista de respuestas */}
                         <div className="flex flex-col">
-                            {replyes.length > 0 ?
-                                console.log(replyes)
-                                : console.log(replyes)}
-                            <div className="border border-gray-400 rounded-lg p-4 mb-4">
-                                {/* Información del usuario que escribió la respuesta */}
-                                <div className="flex items-center mb-2">
-                                    <img src="ruta-a-la-imagen-del-usuario" alt="Imagen del usuario" className="w-6 h-6 rounded-full mr-2" />
-                                    <p className="text-gray-700 font-medium">Nombre del usuario</p>
-                                </div>
-                                {/* Contenido de la respuesta */}
-                                <p className="text-gray-700">Contenido de la respuesta</p>
-                            </div>
+                            {replyes != null ?
+
+
+                                replyes.map((reply) => (
+                                    <div className="bg-gray-100 rounded-lg p-4 m-4">
+                                        {/* Información del usuario que escribió la respuesta */}
+                                        <div className="flex items-center mb-2">
+                                            <img src="/img/avatar.png" alt="Imagen del usuario" className="w-6 h-6 rounded-full mr-2" />
+                                            <p className="text-gray-700 font-medium underline">{reply.user.username ?? null}</p>
+                                        </div>
+                                        {/* Contenido de la respuesta */}
+                                        <p className="text-gray-700 text-left ml-2">{reply.body}</p>
+
+                                    </div>
+                                ))
+
+
+
+
+                                : 'Este mensaje no contiene aun respuestas'
+                            }
+
 
                             {/* Respuesta 2 */}
 
 
                             {/* ... y así sucesivamente para cada respuesta */}
                         </div>
+
+
+                        <hr class="w-48 h-1 mx-auto my-4 bg-red-800 border-0 rounded md:my-10 dark:bg-gray-700" />
+                        <div className="m-3">
+                            <center>
+                                <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white">Añadir respuesta:</h1>
+                                <ReactQuill className="m-3" theme="snow" value={value} onChange={setValue} modules={modules} />
+                                <button className="btn btn-primary" >Guardar</button>
+                            </center>
+                        </div>
+
                     </div>
-                    {/* <ReactQuill theme="snow" value={value} onChange={setValue} modules={modules} />
+                    {/* 
                     <button className="btn btn-success" onClick={saveReply} /> */}
                 </div>
             </center >
