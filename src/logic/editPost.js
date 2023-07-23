@@ -2,13 +2,15 @@ import React from "react";
 import axios from 'axios';
 import { toast } from "react-hot-toast";
 
-export function createPost(infoPost) {
-
+export function postEdit(infoPost) {
 
     let userId = localStorage.getItem('id');
     infoPost.userId = userId;
-
-    axios.post('http://localhost:8000/api/posts/new', infoPost)
+    axios.put('http://localhost:8000/api/posts/' + infoPost.id, infoPost, {
+        headers: {
+            'Authorization': `token`
+        }
+    })
         .then((res) => {
             if (res.data.code == 'ok') {
                 toast(res.data.status, {

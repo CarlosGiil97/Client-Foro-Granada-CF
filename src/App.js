@@ -45,7 +45,7 @@ function App() {
               key={route.path}
               path={route.path}
               exact={route.exact}
-              element={<route.component />}
+              element={<route.component params={route.params} />}
             />
           ))}
         </Routes>

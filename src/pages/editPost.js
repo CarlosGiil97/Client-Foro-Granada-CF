@@ -3,17 +3,20 @@ import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { createPost } from "../logic/createPost";
+import { postEdit } from "../logic/editPost";
 import { useParams } from "react-router-dom";
 
 
 
-export function NewPost() {
-    const categoryId = useParams();
+export function EditPost() {
+
+    const postId = useParams();
     const [title, setTitle] = useState('')
-    const [category, setCategory] = useState(categoryId.categoryId ?? '')
+    const [category, setCategory] = useState('')
     const [description, setDescription] = useState('')
+    const [userPostCreation, setUserPostCreation] = useState('')
     const [categories, setCategories] = useState([])
+    const [id, setId] = useState(postId.postId ?? null)
 
 
 
@@ -28,28 +31,47 @@ export function NewPost() {
             return;
         }
 
-        let data = { title, category, description };
-        createPost(data)
+        let id = postId.postId;
+        let data = { id, title, category, description };
+        postEdit(data)
 
     };
 
     //con useEffect hago una petición para obtener las categories
     useEffect(() => {
         axios.get('http://localhost:8000/api/categories', {
-        })
-            .then((res) => {
-                //creo un array de las categories que recibo añadiendo como clave el id y valor el text
-                const newArray = res['data'].map(category => ({
-                    id: category.id,
-                    nombre: category.nombre,
-                }));
+        }).then((res) => {
+            //creo un array de las categories que recibo añadiendo como clave el id y valor el text
+            const newArray = res['data'].map(category => ({
+                id: category.id,
+                nombre: category.nombre,
+            }));
 
-                setCategories(newArray)
-                console.log(categoryId.categoryId)
+            setCategories(newArray)
+
+
+            //Obtener info sobre el postId
+            axios.get('http://localhost:8000/api/posts/' + postId.postId, {
+            }).then((res) => {
+                //creo un array de las categories que recibo añadiendo como clave el id y valor el text
+                setTitle(res.data.title)
+                setDescription(res.data.body)
+                setCategory(res.data.id_cat)
+                setUserPostCreation(res.data.id_user)
+
             })
-            .catch((error) => {
-                console.error(error)
-            })
+                .catch((error) => {
+                    console.error(error)
+                })
+
+
+
+        }).catch((error) => {
+            console.error(error)
+        })
+
+
+
 
     }, []);
 
@@ -84,7 +106,7 @@ export function NewPost() {
                                         <select
                                             className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                             id="category"
-                                            value={categoryId.categoryId ?? category}
+                                            value={category}
                                             onChange={(e) => setCategory(e.target.value)}
                                         >
                                             <option value="0" >Seleccione categoria</option>
@@ -92,7 +114,7 @@ export function NewPost() {
 
                                                 categories.map((cat) => (
 
-                                                    <option key={cat.id} value={cat.id} selected={cat.id == categoryId.categoryId ? 'selected' : ''}   >
+                                                    <option key={cat.id} value={cat.id}  >
                                                         {cat.nombre}
                                                     </option>
                                                 )) : null}
@@ -126,12 +148,17 @@ export function NewPost() {
                                 </div>
                             </div>
                             <div className="flex justify-end">
-                                <button
-                                    className="bg-red-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="submit"
-                                >
-                                    Publicar
-                                </button>
+                                {userPostCreation != localStorage.getItem('id') ?
+                                    <p class="text-lg font-medium text-gray-900 dark:text-white">No tienes permiso para editar un post que no has creado</p> : <>
+                                        <button
+                                            className="bg-red-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                            type="submit"
+                                        >
+                                            Editar
+                                        </button>
+                                    </>
+                                }
+
                             </div>
                         </form>
                     </div>

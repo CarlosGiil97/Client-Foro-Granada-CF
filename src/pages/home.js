@@ -1,115 +1,101 @@
 import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import classNames from 'classnames';
+import { listLastPosts } from "../logic/listLastPosts";
+import { list } from "postcss";
+import { ListGroup } from "flowbite-react";
+import { FaPencil } from "react-icons/fa6";
+
+
 
 
 export function Home() {
 
-    const CategoriesList = () => {
-        // Aquí iría el código para mostrar el listado de categorías
-        return (
-            <div className="w-3/4 m-2 bg-midnight">
-                {/* Contenido del primer módulo */}
-                <h6 class="mb-4 mt-2 text-1xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-1xl dark:text-white">Ultimos posts ...</h6>
-                <ul
-                    className="relative m-0 w-full list-none overflow-hidden p-0 transition-[height] duration-200 ease-in-out"
-                    data-te-stepper-init
-                    data-te-stepper-type="vertical">
-                    <li
-                        data-te-stepper-step-ref
-                        className="relative h-fit after:absolute after:left-[2.45rem] after:top-[3.6rem] after:mt-px after:h-[calc(100%-2.45rem)] after:w-px after:bg-[#e0e0e0] after:content-[''] dark:after:bg-neutral-600">
-                        <div
-                            data-te-stepper-head-ref
-                            className="flex cursor-pointer items-center p-6 leading-[1.3rem] no-underline after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]">
-                            <span
-                                data-te-stepper-head-icon-ref
-                                className="mr-3 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]">
-                                1
-                            </span>
-                            <span
-                                data-te-stepper-head-text-ref
-                                className="text-neutral-500 after:absolute after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300">
-                                step1
-                            </span>
-                        </div>
-                        <div
-                            data-te-stepper-content-ref
-                            className="transition-[height, margin-bottom, padding-top, padding-bottom] left-0 overflow-hidden pb-6 pl-[3.75rem] pr-6 ps-1 duration-300 ease-in-out">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </div>
-                    </li>
+    const [posts, setPosts] = useState([]);
+    const [userId, setuserId] = useState(localStorage.getItem("id"));
 
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/posts')
+            .then((res) => {
 
-                    <li
-                        data-te-stepper-step-ref
-                        className="relative h-fit after:absolute after:left-[2.45rem] after:top-[3.6rem] after:mt-px after:h-[calc(100%-2.45rem)] after:w-px after:bg-[#e0e0e0] after:content-[''] dark:after:bg-neutral-600">
-                        <div
-                            data-te-stepper-head-ref
-                            className="flex cursor-pointer items-center p-6 leading-[1.3rem] no-underline after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]">
-                            <span
-                                data-te-stepper-head-icon-ref
-                                className="mr-3 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]">
-                                2
-                            </span>
-                            <span
-                                data-te-stepper-head-text-ref
-                                className="text-neutral-500 after:absolute after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300">
-                                step2
-                            </span>
-                        </div>
-                        <div
-                            data-te-stepper-content-ref
-                            className="transition-[height, margin-bottom, padding-top, padding-bottom] left-0 overflow-hidden pb-6 pl-[3.75rem] pr-6 ps-1 duration-300 ease-in-out">
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat.
-                        </div>
-                    </li>
-
-
-                    <li data-te-stepper-step-ref className="relative h-fit">
-                        <div
-                            data-te-stepper-head-ref
-                            className="flex cursor-pointer items-center p-6 leading-[1.3rem] no-underline after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]">
-                            <span
-                                data-te-stepper-head-icon-ref
-                                className="mr-3 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]">
-                                3
-                            </span>
-                            <span
-                                data-te-stepper-head-text-ref
-                                className="text-neutral-500 after:absolute after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300">
-                                step3
-                            </span>
-                        </div>
-                        <div
-                            data-te-stepper-content-ref
-                            className="transition-[height, margin-bottom, padding-top, padding-bottom] left-0 overflow-hidden pb-6 pl-[3.75rem] pr-6 ps-1 duration-300 ease-in-out">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                    </li>
-                </ul>
-
-            </div >
-        );
-    };
-
-    const Notifications = () => {
-        // Aquí iría el código para mostrar las notificaciones del usuario
-        return (
-            <div className="w-1/4 m-2">
-                {/* Contenido del segundo módulo */}
-                <h1>Listado</h1>
-            </div>
-        );
-    };
+                setPosts(res.data)
+            })
+            .catch((error) => {
+                return ('<h5>Ha ocurrido un error al listar los ultimos posts</h5>');
+            })
+    }, []);
 
     return (
         <>
 
             <div className="flex">
-                <CategoriesList />
-                <Notifications />
+
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                        {posts.length != 0 ?
+                            <>
+                                {Object.keys(posts).map(function (key) {
+                                    return (
+                                        <article key={posts[key].id} className="flex max-w-xl flex-col items-start justify-between">
+                                            <div className="flex items-center gap-x-4 text-xs">
+                                                <time dateTime={posts[key].date_created} className="text-gray-500">
+                                                    {posts[key].date_created}
+                                                </time>
+                                                <a
+                                                    href={'/categories/' + posts[key].categories.id}
+                                                    className="relative z-10 rounded-full bg-red-900 px-3 py-1.5 font-medium text-white "
+                                                >
+                                                    {posts[key].categories != null ? posts[key].categories.nombre : 'Sin categoria'}
+
+
+                                                </a>
+
+                                                {/* si el usuario logeado es el mismo que el creador del post, puede editarlo */}
+
+                                                {posts[key]['id_user'] == userId ?
+                                                    <>
+                                                        <a
+                                                            href={'/editPost/' + posts[key]['id']}
+                                                            className="relative z-10 rounded-full bg-green-500 px-3 py-1.5 font-medium text-gray-600 "
+                                                        >
+
+                                                            <FaPencil />
+
+                                                        </a>
+                                                    </>
+                                                    : ''}
+                                            </div>
+                                            <div className="group relative">
+                                                <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                                                    <a href={'/postReplys/' + posts[key]['id']}>
+                                                        <span className="absolute inset-0" />
+                                                        {posts[key].title}
+                                                    </a>
+                                                </h3>
+                                                <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{posts[key].body}</p>
+                                            </div>
+                                            <div className="relative mt-8 flex items-center gap-x-4">
+                                                {/* <img src={posts[key].author.imageUrl} alt="" className="h-10 w-10 rounded-full bg-gray-50" /> */}
+                                                <div className="text-sm leading-6">
+                                                    <p className="font-semibold text-gray-900">
+                                                        <a href="">
+                                                            <span className="absolute inset-0" />
+                                                            {posts[key].info_user['username']} // {posts[key].info_user['email']}
+                                                        </a>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </article>
+                                    )
+                                })}
+                            </>
+
+                            : ''}
+                    </div>
+                </div>
+
             </div>
 
         </>

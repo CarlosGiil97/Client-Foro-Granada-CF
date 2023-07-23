@@ -178,7 +178,7 @@ export function Navbar() {
             <img src="/background.jpeg" alt="Descripción de la imagen" className="w-full object-cover h-48 sm:h-64 md:h-96 lg:h-128" />
             <div className="flex justify-center bg-black">
                 <a href="/" className="px-4 py-2 text-white hover:text-gray-300">Inicio</a>
-                <a href="/newPost" className="px-4 py-2 text-white hover:text-gray-300">Crear nuevo tema</a>
+                <a href="/post" className="px-4 py-2 text-white hover:text-gray-300">Crear nuevo tema</a>
                 <a href="#" className="px-4 py-2 text-white hover:text-gray-300">Mis mensajes</a>
                 <a href="#" className="px-4 py-2 text-white hover:text-gray-300">Mi perfil</a>
             </div>
